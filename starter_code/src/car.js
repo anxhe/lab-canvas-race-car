@@ -1,12 +1,16 @@
 function Car() {
-  this.src = './images/car.png';
+  this.src = 'images/car.png';
   this.position = {
     x:240,
     y:480
   }
+  this.speed = 10;
 }
 
-Car.prototype.move = function() {
-  this.moveLeft = keys.LEFT;
-  this.moveRight = keys.RIGHT;
+Car.prototype.moveLeft = function(){
+  this.position.x -= this.speed;
+}
+
+Car.prototype.moveRight = function(){
+  this.position.x += this.speed;
 }

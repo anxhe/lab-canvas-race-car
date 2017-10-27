@@ -1,22 +1,37 @@
-var car;
-
 window.onload = function() {
+  var car = new Car();
+  var img = new Image();
+  var keys = {
+    LEFT: 37,
+    RIGHT: 39
+  }
+
+  img.src = car.src;
+  var ctx= document.getElementById('lienzo').getContext('2d');
 
   document.getElementById("start-button").onclick = function() {
-
-
-  startGame();
-
+    startGame();
   };
 
-  function draw(car) {
-    var img = new Image();
-    img.onload = function() {
-      ctx.drawImage(img, car.position.x, car.position.y, 70, 120 )
+  document.onkeydown = function(e){
+    switch (e.keyCode) {
+      case keys.LEFT:
+        car.moveLeft();
+        draw();
+        break;
+      case keys.RIGHT:
+        car.moveRight();
+        draw();
+        break;
     }
-    img.src = car.src;
+  }
 
-    var ctx= document.getElementById('lienzo').getContext('2d');
+  function startGame() {
+    draw();
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, 600, 600);
     ctx.fillStyle="#3e8305";
     ctx.fillRect(0, 0,450,600);
 
@@ -30,30 +45,15 @@ window.onload = function() {
     ctx.moveTo(90,0);
     ctx.lineTo(90,600);
 
-
     ctx.moveTo(360,0);
     ctx.lineTo(360,600);
     ctx.stroke();
-
 
     ctx.setLineDash([40])
     ctx.moveTo(228, 0);
     ctx.lineTo(228, 600);
     ctx.stroke();
     ctx.restore();
+    ctx.drawImage(img, car.position.x, car.position.y, 70, 120 )
   }
-
-  function startGame() {
-    car = new Car();
-    draw(car);
-  }
-
 };
-
-
-var keys = {
-  UP: 38,
-  DOWN: 40,
-  LEFT: 37,
-  RIGHT: 39
-}
